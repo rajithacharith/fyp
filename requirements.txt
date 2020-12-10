@@ -1,0 +1,17 @@
+asgiref==3.2.10
+certifi==2020.6.20
+click==7.1.2
+numpy==1.19.4
+pandas==1.1.4
+PyQt5==5.15.1
+pyqt5-plugins==5.15.1.2.0.1
+PyQt5-sip==12.8.1
+pyqt5-tools==5.15.1.3
+PySide2==5.15.2
+python-dateutil==2.8.1
+python-dotenv==0.15.0
+pytz==2020.1
+qt5-applications==5.15.1.2.1
+qt5-tools==5.15.1.1.0.1
+shiboken2==5.15.2
+six==1.15.0
