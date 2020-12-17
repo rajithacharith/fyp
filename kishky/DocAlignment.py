@@ -32,7 +32,7 @@ def dumpmatchedpairs(matchedpairs):
     for i in matchedpairs:
         csvfile.write('{},{}\n'.format(i["a"],i["b"]))
 
-
+# Return : array of tuples (source_txt,target_txt,source_emb,target_emb)
 def runDatewise(embeddingPathA,embeddingPathB,datPathA,datPathB):
     alignedcounts = []
     totcounts = []
@@ -72,7 +72,9 @@ def runDatewise(embeddingPathA,embeddingPathB,datPathA,datPathB):
                         aligned.append(
                             (
                                 datPathA + enYear + "/" + enMonth + "/" + enDay + "/"+i['a'].replace(".raw", ".txt"),
-                                datPathB + enYear + "/" + enMonth + "/" + enDay + "/" + i['b'].replace(".raw", ".txt")
+                                datPathB + enYear + "/" + enMonth + "/" + enDay + "/" + i['b'].replace(".raw", ".txt"),
+                                embeddingPathA + enYear + "/" + enMonth + "/" + enDay + "/" + i['b'],
+                                embeddingPathB + enYear + "/" + enMonth + "/" + enDay + "/" + i['b']
                              )
                         )
 

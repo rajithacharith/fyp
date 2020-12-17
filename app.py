@@ -46,6 +46,7 @@ class MyWidget(QtWidgets.QMainWindow,Ui_Form):
         print("A - "+self.sourceText)
         print("B - "+self.targetText)
         aligned = runDatewise(self.sourceEmbedding,self.targetEmbedding,self.sourceText,self.targetText)
+
         for i in aligned:
             rowPosition = self.tableWidget.rowCount()
             self.tableWidget.insertRow(rowPosition)
