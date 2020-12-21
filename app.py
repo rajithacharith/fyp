@@ -7,15 +7,31 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication
 
 class MyWidget(QtWidgets.QMainWindow,Ui_Form):
+
     def __init__(self,parent=None):
         super(MyWidget,self).__init__(parent)
         self.setupUi(self)
+        self.euclidean_distance = False
+        self.cosine_distance = False
+        self.metric_distance = False
         self.pushButton.clicked.connect(self.setSourceEmbedding)
         self.pushButton_2.clicked.connect(self.setTargetEmbedding)
         self.pushButton_3.clicked.connect(self.setTargetText)
         self.pushButton_4.clicked.connect(self.setSourceText)
         self.pushButton_5.clicked.connect(self.docalign)
         self.pushButton_6.clicked.connect(self.testTable)
+        self.checkBox_cosine.clicked.connect(self.setCheckBoxCosine)
+        self.checkBox_euclidean.clicked.connect(self.setCheckBoxEuclidean)
+        self.checkBox_metric.clicked.connect(self.setCheckBoxMetric)
+
+    def setCheckBoxCosine(self):
+        self.cosine_distance = self.checkBox_cosine.isChecked()
+
+    def setCheckBoxEuclidean(self):
+        self.euclidean_distance = self.checkBox_euclidean.isChecked()
+
+    def setCheckBoxMetric(self):
+        self.metric_distance = self.checkBox_metric.isChecked()
 
     def setSourceEmbedding(self):
         filename = QtWidgets.QFileDialog.getExistingDirectory(self,'Select Source Embedding Directory')
@@ -45,18 +61,45 @@ class MyWidget(QtWidgets.QMainWindow,Ui_Form):
         print("Starting Document Alignment")
         print("A - "+self.sourceText)
         print("B - "+self.targetText)
-        aligned = runDatewise(self.sourceEmbedding,self.targetEmbedding,self.sourceText,self.targetText)
 
-        for i in aligned:
-            rowPosition = self.tableWidget.rowCount()
-            self.tableWidget.insertRow(rowPosition)
-            numcols = self.tableWidget.columnCount()
-            numrows = self.tableWidget.rowCount()
-            self.tableWidget.setRowCount(numrows)
-            self.tableWidget.setColumnCount(numcols)
-            self.tableWidget.setItem(numrows - 1, 0, QtWidgets.QTableWidgetItem(i[0]))
-            self.tableWidget.setItem(numrows - 1, 1, QtWidgets.QTableWidgetItem(i[1]))
-        # here calls the doc align algorithm
+        if (self.checkBox_cosine.isChecked() or self.checkBox_metric.isChecked() or self.checkBox_euclidean.isChecked()):
+            distance_metric = 0
+
+            if (self.checkBox_cosine.isChecked() and self.checkBox_metric.isChecked() and self.checkBox_euclidean.isChecked()):
+                distance_metric = 1
+                print("all")
+            elif (self.checkBox_cosine.isChecked() and self.checkBox_metric.isChecked()):
+                print("metric + cosine")
+                distance_metric = 2
+            elif (self.checkBox_cosine.isChecked() and self.checkBox_euclidean.isChecked()):
+                print("cosine + euc")
+                distance_metric = 3
+            elif (self.checkBox_metric.isChecked() and self.checkBox_euclidean.isChecked()):
+                print("metric + euc")
+                distance_metric = 4
+            elif (self.checkBox_metric.isChecked()):
+                print("metric")
+                distance_metric = 5
+            elif (self.checkBox_euclidean.isChecked()):
+                print("euc")
+                distance_metric = 6
+            else:
+                print("cosine")
+                distance_metric = 7
+            aligned = runDatewise(self.sourceEmbedding,self.targetEmbedding,self.sourceText,self.targetText, distance_metric)
+
+            for i in aligned:
+                rowPosition = self.tableWidget.rowCount()
+                self.tableWidget.insertRow(rowPosition)
+                numcols = self.tableWidget.columnCount()
+                numrows = self.tableWidget.rowCount()
+                self.tableWidget.setRowCount(numrows)
+                self.tableWidget.setColumnCount(numcols)
+                self.tableWidget.setItem(numrows - 1, 0, QtWidgets.QTableWidgetItem(i[0]))
+                self.tableWidget.setItem(numrows - 1, 1, QtWidgets.QTableWidgetItem(i[1]))
+            # here calls the doc align algorithm
+        else:
+            print("Please select at least one distance measurement")
 
     def testTable(self):
         rowPosition = self.tableWidget.rowCount()

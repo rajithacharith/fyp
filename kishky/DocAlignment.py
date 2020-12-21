@@ -33,7 +33,7 @@ def dumpmatchedpairs(matchedpairs):
         csvfile.write('{},{}\n'.format(i["a"],i["b"]))
 
 # Return : array of tuples (source_txt,target_txt,source_emb,target_emb)
-def runDatewise(embeddingPathA,embeddingPathB,datPathA,datPathB):
+def runDatewise(embeddingPathA, embeddingPathB, datPathA, datPathB, distance_metric):
     alignedcounts = []
     totcounts = []
     enYears = os.listdir(embeddingPathA)
@@ -48,7 +48,7 @@ def runDatewise(embeddingPathA,embeddingPathB,datPathA,datPathB):
                     embeddingPathA + enYear + "/" + enMonth + "/" + enDay + "/",
                     embeddingPathB + enYear + "/" + enMonth + "/" + enDay + "/",
                     datPathA + enYear + "/" + enMonth + "/" + enDay + "/",
-                    datPathB + enYear + "/" + enMonth + "/" + enDay + "/"
+                    datPathB + enYear + "/" + enMonth + "/" + enDay + "/", distance_metric
                     )
                 # print(matchedpairs);
                 # idf
@@ -95,7 +95,7 @@ def func(params):
     return {"a": file1, "b": file2, "distance": a.greedyMoversDistance(file1, file2, weightA, weightB, embedPathA, embedPathB, wordDictionary)}
 
 
-def SentenceLengthAlignment(embedPathA, embedPathB, dataPathA, dataPathB): # hiru -  325/500 # gosssip - 296/300 # wsws - 497/500 # army - 523/535 # itn - 41/51
+def SentenceLengthAlignment(embedPathA, embedPathB, dataPathA, dataPathB, distance_metric): # hiru -  325/500 # gosssip - 296/300 # wsws - 497/500 # army - 523/535 # itn - 41/51
     try:
         files1 = os.listdir(embedPathA)
         files2 = os.listdir(embedPathB)
@@ -109,7 +109,7 @@ def SentenceLengthAlignment(embedPathA, embedPathB, dataPathA, dataPathB): # hir
         weightsA.append(normalizeDocumentMass(getSentenceLengthWeightings(dataPathA, file1, 'en')))
     for file2 in files2:
         weightsB.append(normalizeDocumentMass(getSentenceLengthWeightings(dataPathB, file2, 'si')))
-    print(len(file1))
+    # print(len(file1))
     paramlist = []
     # print(paramlist)
 
@@ -117,7 +117,7 @@ def SentenceLengthAlignment(embedPathA, embedPathB, dataPathA, dataPathB): # hir
     for i in range(len(files1)):
         for j in range(len(files2)):
             paramlist.append((files1[i],files2[j],weightsA[i],weightsB[j],embedPathA,embedPathB,wordDictionary))
-    print(paramlist[0])
+    # print(paramlist[0])
     # print(params[0])
     tempDistances = []
 
@@ -128,17 +128,10 @@ def SentenceLengthAlignment(embedPathA, embedPathB, dataPathA, dataPathB): # hir
     # tempDistances = pool.map(func, paramlist)
     for i in range(len(files1)):
         print(i)
-        # if i == 500:
-        #     print("breaking")
-        #     break
-
         for j in range(len(files2)):
-            # if j == 500:
-            #     print("breaking")
-            #     break
             weightA = weightsA[i].copy()
             weightB = weightsB[j].copy()
-            tempDistances.append({"a": files1[i], "b": files2[j], "distance": a.greedyMoversDistance(files1[i], files2[j], weightA, weightB, embedPathA, embedPathB, wordDictionary)})
+            tempDistances.append({"a": files1[i], "b": files2[j], "distance": a.greedyMoversDistance(files1[i], files2[j], weightA, weightB, embedPathA, embedPathB, wordDictionary, distance_metric)})
 
     mergeSort(tempDistances)
     matchedPairs = competitiveMatching(tempDistances)
