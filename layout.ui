@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>726</width>
-    <height>567</height>
+    <height>669</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>10</y>
+     <y>40</y>
      <width>131</width>
      <height>51</height>
     </rect>
@@ -39,7 +39,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>70</y>
+     <y>100</y>
      <width>131</width>
      <height>51</height>
     </rect>
@@ -61,7 +61,7 @@
    <property name="geometry">
     <rect>
      <x>150</x>
-     <y>70</y>
+     <y>100</y>
      <width>411</width>
      <height>51</height>
     </rect>
@@ -83,7 +83,7 @@
    <property name="geometry">
     <rect>
      <x>150</x>
-     <y>10</y>
+     <y>40</y>
      <width>411</width>
      <height>51</height>
     </rect>
@@ -105,7 +105,7 @@
    <property name="geometry">
     <rect>
      <x>580</x>
-     <y>70</y>
+     <y>100</y>
      <width>131</width>
      <height>51</height>
     </rect>
@@ -124,7 +124,7 @@
    <property name="geometry">
     <rect>
      <x>580</x>
-     <y>10</y>
+     <y>40</y>
      <width>131</width>
      <height>51</height>
     </rect>
@@ -143,7 +143,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>380</y>
+     <y>410</y>
      <width>701</width>
      <height>171</height>
     </rect>
@@ -198,7 +198,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>130</y>
+     <y>160</y>
      <width>131</width>
      <height>51</height>
     </rect>
@@ -220,7 +220,7 @@
    <property name="geometry">
     <rect>
      <x>580</x>
-     <y>190</y>
+     <y>220</y>
      <width>131</width>
      <height>51</height>
     </rect>
@@ -239,7 +239,7 @@
    <property name="geometry">
     <rect>
      <x>150</x>
-     <y>190</y>
+     <y>220</y>
      <width>411</width>
      <height>51</height>
     </rect>
@@ -261,7 +261,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>190</y>
+     <y>220</y>
      <width>131</width>
      <height>51</height>
     </rect>
@@ -283,7 +283,7 @@
    <property name="geometry">
     <rect>
      <x>150</x>
-     <y>130</y>
+     <y>160</y>
      <width>411</width>
      <height>51</height>
     </rect>
@@ -305,7 +305,7 @@
    <property name="geometry">
     <rect>
      <x>580</x>
-     <y>130</y>
+     <y>160</y>
      <width>131</width>
      <height>51</height>
     </rect>
@@ -324,7 +324,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>290</y>
+     <y>320</y>
      <width>701</width>
      <height>39</height>
     </rect>
@@ -343,7 +343,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>330</y>
+     <y>360</y>
      <width>701</width>
      <height>31</height>
     </rect>
@@ -362,7 +362,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>250</y>
+     <y>280</y>
      <width>701</width>
      <height>31</height>
     </rect>
@@ -392,6 +392,25 @@
       </property>
       <property name="text">
        <string>Metric Learning</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="gridLayoutWidget_15">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>151</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_15">
+    <item row="0" column="0">
+     <widget class="QCheckBox" name="checkBox_createEmbeddings">
+      <property name="text">
+       <string>Create Embeddings</string>
       </property>
      </widget>
     </item>
