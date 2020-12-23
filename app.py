@@ -2,6 +2,7 @@ import sys
 import random
 from os.path import expanduser
 from kishky.DocAlignment import runDatewise
+from sentenceAlignment.align import alignSentences
 from layout import Ui_Form
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication
@@ -87,8 +88,9 @@ class MyWidget(QtWidgets.QMainWindow,Ui_Form):
                 print("cosine")
                 distance_metric = 7
             aligned = runDatewise(self.sourceEmbedding,self.targetEmbedding,self.sourceText,self.targetText, distance_metric)
+            aligned_sentences = alignSentences(aligned, distance_metric)
 
-            for i in aligned:
+            for i in aligned_sentences:
                 rowPosition = self.tableWidget.rowCount()
                 self.tableWidget.insertRow(rowPosition)
                 numcols = self.tableWidget.columnCount()
@@ -118,5 +120,3 @@ if __name__ == "__main__":
     widget.show()
 
     sys.exit(app.exec_())
-
-

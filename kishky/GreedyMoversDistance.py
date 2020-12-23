@@ -28,11 +28,11 @@ loaded_model = pickle.load(open(filename, 'rb'))
 #         distance = distance + np.linalg.norm(vecA - vecB) * flow
 #     return distance
 class GreedyMoversDistance:
-    def greedyMoversDistance(self,docA, docB, weightsA, weightsB, embedpathA, embedpathB, wordDictionary, distance_metric):
+    def greedyMoversDistance(self,docA, docB, weightsA, weightsB, embedpathA, embedpathB, dataPathA, dataPathB, wordDictionary, distance_metric):
         docVecA = self.getDocVec(docA, embedpathA)
         docVecB = self.getDocVec(docB, embedpathB)
-        docFileA = self.getDocFile(docA, embedpathA)
-        docFileB = self.getDocFile(docB, embedpathB)
+        docFileA = self.getDocFile(docA, dataPathA)
+        docFileB = self.getDocFile(docB, dataPathB)
 
         maxSortedVecs = self.getSortedDistances(docVecA, docVecB, distance_metric)
         minSortedVecs = np.flipud(maxSortedVecs)
@@ -110,9 +110,8 @@ class GreedyMoversDistance:
         return docVec
 
     def getDocFile(self,doc, path):
-        docFile = open(path.replace("embeddings", "txtfiles") + doc.replace("raw", "txt"), "r",encoding='latin-1')
+        docFile = open(path + doc.replace("raw", "txt"), "r",encoding='latin-1')
         lines = []
         for line in docFile.readlines():
             lines.append(line.strip().replace("\n", ""))
         return lines
-
