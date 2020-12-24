@@ -44,7 +44,7 @@ def metriclearning_metrix(embA, embB, loaded_model):
             tupple_list.append((vec_a,vec_b))
         similarities = metric_learning_similarity_ab(loaded_model, tupple_list)
         metrix_AB.append(similarities)
-    return metrix_AB
+    return np.array(metrix_AB)
 
 
 def get_neighbours(metrix_AB, k=4):

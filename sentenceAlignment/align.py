@@ -7,7 +7,7 @@ filename = 'kishky\model2_itm2.sav'
 loaded_model = pickle.load(open(filename, 'rb'))
 
 def alignSentences(aligned_documents, distance_metric):
-    ratio = True
+    ratio = False
     aligned_sentences = []
     for i in aligned_documents:
         path_embA = i[2]
@@ -61,11 +61,12 @@ def alignSentences(aligned_documents, distance_metric):
         if ratio == True:
             metrix_AB = get_MBS_metrix(metrix_AB, embA, embB)
 
-        # alignment = forward(metrix_AB, sentences_A, sentences_B)
+        alignment = forward(metrix_AB, sentences_A, sentences_B)
         # alignment = backward(metrix_AB, sentences_A, sentences_B)
-        alignment = intersection(metrix_AB, sentences_A, sentences_B)
+        # alignment = intersection(metrix_AB, sentences_A, sentences_B)
         aligned_sentences.extend(alignment)
 
+    aligned_sentences.sort(key = lambda x:-x[-1])
     return aligned_sentences
 
 
@@ -73,9 +74,10 @@ def forward(metrix_AB, sentences_A, sentences_B):
     alignment = []
     for i in range (len(metrix_AB)):
         index_a = i
+        score = np.max(metrix_AB[i])
         index_b = np.argmax(metrix_AB[i])
         alignment.append(
-            (sentences_A[index_a][0], sentences_B[index_b][0])
+            (sentences_A[index_a][0], sentences_B[index_b][0], score)
         )
     return alignment
 
@@ -84,9 +86,10 @@ def backward(metrix_AB, sentences_A, sentences_B):
     alignment = []
     for i in range (len(metrix_AB.T)):
         index_b = i
+        score = np.max(metrix_AB.T[i])
         index_a = np.argmax(metrix_AB.T[i])
         alignment.append(
-            (sentences_A[index_a][0], sentences_B[index_b][0])
+            (sentences_A[index_a][0], sentences_B[index_b][0], score)
         )
     return alignment
 
