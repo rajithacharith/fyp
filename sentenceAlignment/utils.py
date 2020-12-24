@@ -4,7 +4,7 @@ from sklearn.metrics.pairwise import cosine_similarity, euclidean_distances
 
 
 def read_sentence_file(path):
-    sentences = open(path, "r").read()
+    sentences = open(path, "r", encoding='utf-8').read()
     sentences = sentences.split("\n")
     sentences = sentences[:-1]
     sentences = [i.split("\t") for i in sentences]
