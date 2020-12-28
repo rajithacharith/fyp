@@ -5,6 +5,7 @@ from kishky.DocAlignment import runDatewise
 from layout import Ui_Form
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication
+from kishky.CreateEmbeddings import createEmbeddings
 
 class MyWidget(QtWidgets.QMainWindow,Ui_Form):
 
@@ -17,15 +18,25 @@ class MyWidget(QtWidgets.QMainWindow,Ui_Form):
         self.pushButton_4.clicked.connect(self.setSourceText)
         self.pushButton_5.clicked.connect(self.docalign)
         self.pushButton_6.clicked.connect(self.testTable)
-        self.checkBox_createEmbeddings.clicked.connect(self.changeEmbeddingPathVisibility)
+        self.checkBox_createEmbeddings.clicked.connect(self.changeEmbeddingOptionsVisibility)
+        self.comboBox_sourceLang.addItems(["En", "Si", "Ta"])
+        self.comboBox_targetLang.addItems(["En", "Si", "Ta"])
 
-    def changeEmbeddingPathVisibility(self):
+    def changeEmbeddingOptionsVisibility(self):
         if (self.checkBox_createEmbeddings.isChecked()):
-            self.pushButton.setDisabled(True)
-            self.pushButton_2.setDisabled(True)
+            # self.pushButton.setDisabled(True)
+            # self.pushButton_2.setDisabled(True)
+            self.comboBox_sourceLang.setDisabled(False)
+            self.comboBox_targetLang.setDisabled(False)
+            self.label_9.setDisabled(False)
+            self.label_10.setDisabled(False)
         else:
-            self.pushButton.setDisabled(False)
-            self.pushButton_2.setDisabled(False)
+            self.comboBox_sourceLang.setDisabled(True)
+            self.comboBox_targetLang.setDisabled(True)
+            self.label_9.setDisabled(True)
+            self.label_10.setDisabled(True)
+            # self.pushButton.setDisabled(False)
+            # self.pushButton_2.setDisabled(False)
 
     def setSourceEmbedding(self):
         filename = QtWidgets.QFileDialog.getExistingDirectory(self,'Select Source Embedding Directory')
@@ -57,7 +68,7 @@ class MyWidget(QtWidgets.QMainWindow,Ui_Form):
         print("B - "+self.targetText)
 
         if (self.checkBox_createEmbeddings.isChecked()):
-            self.createEmbeddings()
+            self.setEmbeddings()
 
         if (self.checkBox_cosine.isChecked() or self.checkBox_metric.isChecked() or self.checkBox_euclidean.isChecked()):
             distance_metric = 0
@@ -108,11 +119,13 @@ class MyWidget(QtWidgets.QMainWindow,Ui_Form):
         self.tableWidget.setItem(numrows - 1, 0, QtWidgets.QTableWidgetItem("Test"))
         self.tableWidget.setItem(numrows - 1, 1, QtWidgets.QTableWidgetItem("Test"))
 
-    def createEmbeddings(self):
-        self.sourceEmbedding = "C:/Users/Dilan Sachintha/Desktop/embeddings/datewise/hiru/en/"
-        self.targetEmbedding = "C:/Users/Dilan Sachintha/Desktop/embeddings/datewise/hiru/si/"
-        self.label_3.setText(self.sourceEmbedding)
-        self.label_4.setText(self.targetEmbedding)
+    def setEmbeddings(self):
+        src_txt_input_path = self.sourceText
+        src_txt_output_path = self.sourceEmbedding
+        target_txt_input_path = self.targetText
+        target_txt_output_path = self.targetEmbedding
+        createEmbeddings(src_txt_input_path, src_txt_output_path, str(self.comboBox_sourceLang.currentText()).lower())
+        createEmbeddings(target_txt_input_path, target_txt_output_path, str(self.comboBox_targetLang.currentText()).lower())
 
 
 if __name__ == "__main__":
