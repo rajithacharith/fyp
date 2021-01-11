@@ -73,7 +73,7 @@ def runDatewise(embeddingPathA, embeddingPathB, datPathA, datPathB, distance_met
                             (
                                 datPathA + enYear + "/" + enMonth + "/" + enDay + "/"+i['a'].replace(".raw", ".txt"),
                                 datPathB + enYear + "/" + enMonth + "/" + enDay + "/" + i['b'].replace(".raw", ".txt"),
-                                embeddingPathA + enYear + "/" + enMonth + "/" + enDay + "/" + i['b'],
+                                embeddingPathA + enYear + "/" + enMonth + "/" + enDay + "/" + i['a'],
                                 embeddingPathB + enYear + "/" + enMonth + "/" + enDay + "/" + i['b']
                              )
                         )
@@ -131,7 +131,7 @@ def SentenceLengthAlignment(embedPathA, embedPathB, dataPathA, dataPathB, distan
         for j in range(len(files2)):
             weightA = weightsA[i].copy()
             weightB = weightsB[j].copy()
-            tempDistances.append({"a": files1[i], "b": files2[j], "distance": a.greedyMoversDistance(files1[i], files2[j], weightA, weightB, embedPathA, embedPathB, wordDictionary, distance_metric)})
+            tempDistances.append({"a": files1[i], "b": files2[j], "distance": a.greedyMoversDistance(files1[i], files2[j], weightA, weightB, embedPathA, embedPathB, dataPathA, dataPathB, wordDictionary, distance_metric)})
 
     mergeSort(tempDistances)
     matchedPairs = competitiveMatching(tempDistances)
