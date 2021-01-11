@@ -2,37 +2,42 @@ import sys
 import random
 from os.path import expanduser
 from kishky.DocAlignment import runDatewise
-from sentenceAlignment.align import alignSentences
 from layout import Ui_Form
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication
+from kishky.CreateEmbeddings import createEmbeddings
+from sentenceAlignment.align import alignSentences
 
 class MyWidget(QtWidgets.QMainWindow,Ui_Form):
 
     def __init__(self,parent=None):
         super(MyWidget,self).__init__(parent)
         self.setupUi(self)
-        self.euclidean_distance = False
-        self.cosine_distance = False
-        self.metric_distance = False
         self.pushButton.clicked.connect(self.setSourceEmbedding)
         self.pushButton_2.clicked.connect(self.setTargetEmbedding)
         self.pushButton_3.clicked.connect(self.setTargetText)
         self.pushButton_4.clicked.connect(self.setSourceText)
         self.pushButton_5.clicked.connect(self.docalign)
         self.pushButton_6.clicked.connect(self.testTable)
-        self.checkBox_cosine.clicked.connect(self.setCheckBoxCosine)
-        self.checkBox_euclidean.clicked.connect(self.setCheckBoxEuclidean)
-        self.checkBox_metric.clicked.connect(self.setCheckBoxMetric)
+        self.checkBox_createEmbeddings.clicked.connect(self.changeEmbeddingOptionsVisibility)
+        self.comboBox_sourceLang.addItems(["En", "Si", "Ta"])
+        self.comboBox_targetLang.addItems(["En", "Si", "Ta"])
 
-    def setCheckBoxCosine(self):
-        self.cosine_distance = self.checkBox_cosine.isChecked()
-
-    def setCheckBoxEuclidean(self):
-        self.euclidean_distance = self.checkBox_euclidean.isChecked()
-
-    def setCheckBoxMetric(self):
-        self.metric_distance = self.checkBox_metric.isChecked()
+    def changeEmbeddingOptionsVisibility(self):
+        if (self.checkBox_createEmbeddings.isChecked()):
+            # self.pushButton.setDisabled(True)
+            # self.pushButton_2.setDisabled(True)
+            self.comboBox_sourceLang.setDisabled(False)
+            self.comboBox_targetLang.setDisabled(False)
+            self.label_9.setDisabled(False)
+            self.label_10.setDisabled(False)
+        else:
+            self.comboBox_sourceLang.setDisabled(True)
+            self.comboBox_targetLang.setDisabled(True)
+            self.label_9.setDisabled(True)
+            self.label_10.setDisabled(True)
+            # self.pushButton.setDisabled(False)
+            # self.pushButton_2.setDisabled(False)
 
     def setSourceEmbedding(self):
         filename = QtWidgets.QFileDialog.getExistingDirectory(self,'Select Source Embedding Directory')
@@ -62,6 +67,9 @@ class MyWidget(QtWidgets.QMainWindow,Ui_Form):
         print("Starting Document Alignment")
         print("A - "+self.sourceText)
         print("B - "+self.targetText)
+
+        if (self.checkBox_createEmbeddings.isChecked()):
+            self.setEmbeddings()
 
         if (self.checkBox_cosine.isChecked() or self.checkBox_metric.isChecked() or self.checkBox_euclidean.isChecked()):
             distance_metric = 0
@@ -112,6 +120,14 @@ class MyWidget(QtWidgets.QMainWindow,Ui_Form):
         self.tableWidget.setColumnCount(numcols)
         self.tableWidget.setItem(numrows - 1, 0, QtWidgets.QTableWidgetItem("Test"))
         self.tableWidget.setItem(numrows - 1, 1, QtWidgets.QTableWidgetItem("Test"))
+
+    def setEmbeddings(self):
+        src_txt_input_path = self.sourceText
+        src_txt_output_path = self.sourceEmbedding
+        target_txt_input_path = self.targetText
+        target_txt_output_path = self.targetEmbedding
+        createEmbeddings(src_txt_input_path, src_txt_output_path, str(self.comboBox_sourceLang.currentText()).lower())
+        createEmbeddings(target_txt_input_path, target_txt_output_path, str(self.comboBox_targetLang.currentText()).lower())
 
 
 if __name__ == "__main__":

@@ -6,7 +6,7 @@ import time
 # from DictionaryWeighting import calcDicWeightForLine
 
 dim = 1024
-filename = 'kishky\model2_itm2.sav'
+filename = 'kishky/model2_itm2.sav'
 loaded_model = pickle.load(open(filename, 'rb'))
 
 # Input for the method must be array of tuples

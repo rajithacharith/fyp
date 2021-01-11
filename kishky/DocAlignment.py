@@ -66,18 +66,17 @@ def runDatewise(embeddingPathA, embeddingPathB, datPathA, datPathB, distance_met
                 #     datPathB + enYear + "/" + enMonth + "/" + enDay + "/"
                 #     )
                 # print(enYear, enMonth, enDay)
-                matchedpairs.reverse()
-                print(matchedpairs)
-                for j in range(len(matchedpairs)//4):
-                    i = matchedpairs[j]
-                    aligned.append(
-                        (
-                            datPathA + enYear + "/" + enMonth + "/" + enDay + "/"+i['a'].replace(".raw", ".txt"),
-                            datPathB + enYear + "/" + enMonth + "/" + enDay + "/" + i['b'].replace(".raw", ".txt"),
-                            embeddingPathA + enYear + "/" + enMonth + "/" + enDay + "/" + i['a'],
-                            embeddingPathB + enYear + "/" + enMonth + "/" + enDay + "/" + i['b']
-                         )
-                    )
+                # print(len(matchedpairs))
+                for i in matchedpairs:
+                    if i['distance']>0.5:
+                        aligned.append(
+                            (
+                                datPathA + enYear + "/" + enMonth + "/" + enDay + "/"+i['a'].replace(".raw", ".txt"),
+                                datPathB + enYear + "/" + enMonth + "/" + enDay + "/" + i['b'].replace(".raw", ".txt"),
+                                embeddingPathA + enYear + "/" + enMonth + "/" + enDay + "/" + i['a'],
+                                embeddingPathB + enYear + "/" + enMonth + "/" + enDay + "/" + i['b']
+                             )
+                        )
 
 
 
@@ -188,7 +187,7 @@ def IDFAlignment(embedPathA, embedPathB, dataPathA, dataPathB): # hiru - 281/500
         # if i == 500:
         #     print("breaking")
         #     break
-
+        
         for j in range(len(files2)):
             weightA = weightsA[i].copy()
             weightB = weightsB[j].copy()
@@ -297,7 +296,7 @@ def loadDictionaries():
 
     enWords = enDictionary.readlines()
     siWords = taDictionary.readlines()
-
+    
     enNames = entaenNameSet.readlines()
     siNames = entataNameSet.readlines()
 
