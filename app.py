@@ -1,17 +1,49 @@
 import sys
 import random
+import worker
 from os.path import expanduser
 from kishky.DocAlignment import runDatewise
-from layout import Ui_Form
+from layouts.mainlayout import Ui_SentenceAlignment as UiForm_main
+from layouts.homelayout import Ui_Home as UiForm_home
+from layouts.readmelayout import Ui_ReadMe as UiForm_readme
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication
 from kishky.CreateEmbeddings import createEmbeddings
 from sentenceAlignment.align import alignSentences
+from pyqtspinner import spinner
 
-class MyWidget(QtWidgets.QMainWindow,Ui_Form):
+class HomeWidget(QtWidgets.QMainWindow, UiForm_home):
 
     def __init__(self,parent=None):
-        super(MyWidget,self).__init__(parent)
+        super(HomeWidget,self).__init__(parent)
+        self.setupUi(self)
+        self.btn_show_readme.clicked.connect(self.showReadMe)
+        self.btn_begin.clicked.connect(self.openSentenceAlignment)
+
+
+    def showReadMe(self):
+        self.readme = ReadMeWidget()
+
+    def openSentenceAlignment(self):
+        self.mainwidget = MainWidget()
+        self.mainwidget.show()
+        self.hide()
+
+class ReadMeWidget(QtWidgets.QMainWindow, UiForm_readme):
+
+    def __init__(self,parent=None):
+        super(ReadMeWidget,self).__init__(parent)
+        self.setupUi(self)
+        self.btn_close.clicked.connect(self.closeWindow)
+        self.show()
+    
+    def closeWindow(self):
+        self.close()
+
+class MainWidget(QtWidgets.QMainWindow, UiForm_main):
+
+    def __init__(self,parent=None):
+        super(MainWidget,self).__init__(parent)
         self.setupUi(self)
         self.pushButton.clicked.connect(self.setSourceEmbedding)
         self.pushButton_2.clicked.connect(self.setTargetEmbedding)
@@ -19,6 +51,7 @@ class MyWidget(QtWidgets.QMainWindow,Ui_Form):
         self.pushButton_4.clicked.connect(self.setSourceText)
         self.pushButton_5.clicked.connect(self.docalign)
         self.pushButton_6.clicked.connect(self.testTable)
+        self.btn_back.clicked.connect(self.goBack)
         self.checkBox_createEmbeddings.clicked.connect(self.changeEmbeddingOptionsVisibility)
         self.comboBox_sourceLang.addItems(["En", "Si", "Ta"])
         self.comboBox_targetLang.addItems(["En", "Si", "Ta"])
@@ -64,9 +97,9 @@ class MyWidget(QtWidgets.QMainWindow,Ui_Form):
             self.label_6.setText(filename)
 
     def docalign(self):
-        print("Starting Document Alignment")
-        print("A - "+self.sourceText)
-        print("B - "+self.targetText)
+        # print("Starting Document Alignment")
+        # print("A - "+self.sourceText)
+        # print("B - "+self.targetText)
 
         if (self.checkBox_createEmbeddings.isChecked()):
             self.setEmbeddings()
@@ -95,21 +128,34 @@ class MyWidget(QtWidgets.QMainWindow,Ui_Form):
             else:
                 print("cosine")
                 distance_metric = 7
-            aligned = runDatewise(self.sourceEmbedding,self.targetEmbedding,self.sourceText,self.targetText, distance_metric)
-            aligned_sentences = alignSentences(aligned, distance_metric)
 
-            for i in aligned_sentences:
-                rowPosition = self.tableWidget.rowCount()
-                self.tableWidget.insertRow(rowPosition)
-                numcols = self.tableWidget.columnCount()
-                numrows = self.tableWidget.rowCount()
-                self.tableWidget.setRowCount(numrows)
-                self.tableWidget.setColumnCount(numcols)
-                self.tableWidget.setItem(numrows - 1, 0, QtWidgets.QTableWidgetItem(i[0]))
-                self.tableWidget.setItem(numrows - 1, 1, QtWidgets.QTableWidgetItem(i[1]))
-            # here calls the doc align algorithm
+            self.thread = QtCore.QThread(self)
+            self.worker = worker.Worker()
+            self.worker.sourceEmbedding = self.sourceEmbedding
+            self.worker.targetEmbedding = self.targetEmbedding
+            self.worker.sourceText = self.sourceText
+            self.worker.targetText = self.targetText
+            self.worker.distance_metric = distance_metric
+            self.worker.moveToThread(self.thread) # worker will be runned in another thread
+            self.worker.done.connect(self.onThreadDone) # Call load_data_to_tree when worker.done is emitted
+            self.thread.started.connect(self.worker.doWork) # Call worker.doWork when the thread starts
+            self.thread.start() # Start the thread (and run doWork)
+            self.waiting_spinner = spinner.WaitingSpinner(self, disableParentWhenSpinning=True, line_width=5, line_length=30, radius=30)
+            self.waiting_spinner.start()
         else:
             print("Please select at least one distance measurement")
+
+    def onThreadDone(self, aligned_sentences):
+        for i in aligned_sentences:
+            self.waiting_spinner.stop()
+            rowPosition = self.tableWidget.rowCount()
+            self.tableWidget.insertRow(rowPosition)
+            numcols = self.tableWidget.columnCount()
+            numrows = self.tableWidget.rowCount()
+            self.tableWidget.setRowCount(numrows)
+            self.tableWidget.setColumnCount(numcols)
+            self.tableWidget.setItem(numrows - 1, 0, QtWidgets.QTableWidgetItem(i[0]))
+            self.tableWidget.setItem(numrows - 1, 1, QtWidgets.QTableWidgetItem(i[1]))
 
     def testTable(self):
         rowPosition = self.tableWidget.rowCount()
@@ -128,11 +174,16 @@ class MyWidget(QtWidgets.QMainWindow,Ui_Form):
         target_txt_output_path = self.targetEmbedding
         createEmbeddings(src_txt_input_path, src_txt_output_path, str(self.comboBox_sourceLang.currentText()).lower())
         createEmbeddings(target_txt_input_path, target_txt_output_path, str(self.comboBox_targetLang.currentText()).lower())
+    
+    def goBack(self):
+        self.home = HomeWidget()
+        self.home.show()
+        self.close()
 
 
 if __name__ == "__main__":
     app = QApplication([])
-    widget = MyWidget()
-    widget.show()
+    home = HomeWidget()
+    home.show()
 
     sys.exit(app.exec_())

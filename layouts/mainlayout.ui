@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>SentenceAlignment</class>
+ <widget class="QWidget" name="SentenceAlignment">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>726</width>
-    <height>669</height>
+    <width>1032</width>
+    <height>855</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>SentenceAlignment</string>
   </property>
   <widget class="QWidget" name="gridLayoutWidget">
    <property name="geometry">
@@ -62,18 +68,25 @@
     <rect>
      <x>150</x>
      <y>100</y>
-     <width>411</width>
+     <width>731</width>
      <height>51</height>
     </rect>
    </property>
-   <layout class="QGridLayout" name="gridLayout_3">
-    <item row="0" column="0">
+   <layout class="QGridLayout" name="gridLayout_3" columnstretch="1,50">
+    <item row="0" column="1">
      <widget class="QLabel" name="label_4">
       <property name="text">
-       <string>-</string>
+       <string/>
       </property>
       <property name="wordWrap">
        <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_13">
+      <property name="text">
+       <string>-</string>
       </property>
      </widget>
     </item>
@@ -84,18 +97,25 @@
     <rect>
      <x>150</x>
      <y>40</y>
-     <width>411</width>
+     <width>731</width>
      <height>51</height>
     </rect>
    </property>
-   <layout class="QGridLayout" name="gridLayout_4">
-    <item row="0" column="0">
+   <layout class="QGridLayout" name="gridLayout_4" columnstretch="1,50">
+    <item row="0" column="1">
      <widget class="QLabel" name="label_3">
       <property name="text">
-       <string>-</string>
+       <string/>
       </property>
       <property name="wordWrap">
        <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_14">
+      <property name="text">
+       <string>-</string>
       </property>
      </widget>
     </item>
@@ -104,7 +124,7 @@
   <widget class="QWidget" name="gridLayoutWidget_5">
    <property name="geometry">
     <rect>
-     <x>580</x>
+     <x>890</x>
      <y>100</y>
      <width>131</width>
      <height>51</height>
@@ -123,7 +143,7 @@
   <widget class="QWidget" name="gridLayoutWidget_6">
    <property name="geometry">
     <rect>
-     <x>580</x>
+     <x>890</x>
      <y>40</y>
      <width>131</width>
      <height>51</height>
@@ -144,8 +164,8 @@
     <rect>
      <x>10</x>
      <y>410</y>
-     <width>701</width>
-     <height>171</height>
+     <width>1011</width>
+     <height>391</height>
     </rect>
    </property>
    <property name="widgetResizable">
@@ -156,8 +176,8 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>699</width>
-      <height>169</height>
+      <width>1009</width>
+      <height>389</height>
      </rect>
     </property>
     <widget class="QTableWidget" name="tableWidget">
@@ -165,15 +185,15 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>701</width>
-       <height>171</height>
+       <width>1011</width>
+       <height>391</height>
       </rect>
      </property>
-     <attribute name="horizontalHeaderDefaultSectionSize">
-      <number>340</number>
-     </attribute>
      <attribute name="horizontalHeaderMinimumSectionSize">
       <number>70</number>
+     </attribute>
+     <attribute name="horizontalHeaderDefaultSectionSize">
+      <number>503</number>
      </attribute>
      <column>
       <property name="text">
@@ -219,7 +239,7 @@
   <widget class="QWidget" name="gridLayoutWidget_8">
    <property name="geometry">
     <rect>
-     <x>580</x>
+     <x>890</x>
      <y>220</y>
      <width>131</width>
      <height>51</height>
@@ -240,18 +260,25 @@
     <rect>
      <x>150</x>
      <y>220</y>
-     <width>411</width>
+     <width>731</width>
      <height>51</height>
     </rect>
    </property>
-   <layout class="QGridLayout" name="gridLayout_9">
-    <item row="0" column="0">
+   <layout class="QGridLayout" name="gridLayout_9" columnstretch="1,50">
+    <item row="0" column="1">
      <widget class="QLabel" name="label_6">
       <property name="text">
-       <string>-</string>
+       <string/>
       </property>
       <property name="wordWrap">
        <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_11">
+      <property name="text">
+       <string>-</string>
       </property>
      </widget>
     </item>
@@ -284,18 +311,25 @@
     <rect>
      <x>150</x>
      <y>160</y>
-     <width>411</width>
+     <width>731</width>
      <height>51</height>
     </rect>
    </property>
-   <layout class="QGridLayout" name="gridLayout_11">
-    <item row="0" column="0">
+   <layout class="QGridLayout" name="gridLayout_11" columnstretch="1,50">
+    <item row="0" column="1">
      <widget class="QLabel" name="label_8">
       <property name="text">
-       <string>-</string>
+       <string/>
       </property>
       <property name="wordWrap">
        <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_12">
+      <property name="text">
+       <string>-</string>
       </property>
      </widget>
     </item>
@@ -304,7 +338,7 @@
   <widget class="QWidget" name="gridLayoutWidget_12">
    <property name="geometry">
     <rect>
-     <x>580</x>
+     <x>890</x>
      <y>160</y>
      <width>131</width>
      <height>51</height>
@@ -325,7 +359,7 @@
     <rect>
      <x>10</x>
      <y>320</y>
-     <width>701</width>
+     <width>1011</width>
      <height>39</height>
     </rect>
    </property>
@@ -344,7 +378,7 @@
     <rect>
      <x>10</x>
      <y>360</y>
-     <width>701</width>
+     <width>1011</width>
      <height>31</height>
     </rect>
    </property>
@@ -363,13 +397,13 @@
     <rect>
      <x>10</x>
      <y>280</y>
-     <width>701</width>
-     <height>31</height>
+     <width>1011</width>
+     <height>41</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
     <property name="leftMargin">
-     <number>85</number>
+     <number>120</number>
     </property>
     <item>
      <widget class="QCheckBox" name="checkBox_euclidean">
@@ -402,8 +436,8 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>151</width>
-     <height>22</height>
+     <width>161</width>
+     <height>25</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout_15">
@@ -421,8 +455,8 @@
     <rect>
      <x>200</x>
      <y>10</y>
-     <width>511</width>
-     <height>21</height>
+     <width>821</width>
+     <height>27</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -461,6 +495,28 @@
      </widget>
     </item>
    </layout>
+  </widget>
+  <widget class="QPushButton" name="btn_back">
+   <property name="geometry">
+    <rect>
+     <x>930</x>
+     <y>820</y>
+     <width>89</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="text">
+    <string>Back</string>
+   </property>
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
   </widget>
  </widget>
  <resources/>

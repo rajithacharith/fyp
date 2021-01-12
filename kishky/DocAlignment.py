@@ -306,7 +306,7 @@ def loadDictionaries():
         wordDictionary[enNames[i].strip().replace("\n", "")] = siNames[i].strip().replace("\n", "")
     # print(wordDictionary)
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
 # mine - 1173, aloka - 1167, aloka with desing - 1181, mine with desig - 1185
 # metric learning + new glossary + designation - 1215

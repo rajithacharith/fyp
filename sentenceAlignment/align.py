@@ -3,7 +3,7 @@ import pickle
 import numpy as np
 from .utils import read_sentence_file, read_emb_file, cosine_metrix, euclidean_metrix, metriclearning_metrix, get_MBS_metrix
 
-filename = 'kishky\model2_itm2.sav'
+filename = 'kishky/model2_itm2.sav'
 loaded_model = pickle.load(open(filename, 'rb'))
 
 def alignSentences(aligned_documents, distance_metric):
